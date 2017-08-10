@@ -1,0 +1,19 @@
+body {
+  background-color: #444;
+  margin: 0 20% 0 20%;
+}
+
+@media (max-width: 767px) {
+  body {
+    margin: 0 5% 0 5%;
+  }
+}
+
+a, p {
+  color: white;
+  font-family: monospace;
+}
+
+h1, h4, p {
+  text-align: center;
+}
