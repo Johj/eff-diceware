@@ -58,7 +58,7 @@ export default class App extends Component {
           <a className='white' href='https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases' style={{textDecoration: 'none',}}>
             {this.state.keys}
           </a>
-          <br />
+          <br /><br /><br />
           <a className='lg-size' onClick={this.componentWillMount}>{this.state.dice}</a>
         </div>
         <div />
