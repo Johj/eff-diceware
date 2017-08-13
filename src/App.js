@@ -4,28 +4,35 @@ const eff = require('./eff.json');
 
 export default class App extends Component {
   state = {
+    dice: '',
     passphrase: '',
     keys: '',
   }
 
   componentWillMount = () => {
+    const dice = String.fromCharCode(parseInt(2679 + this.rollDice(), 16)); // unicode dice
     const [passphrase, keys] = this.generatePassphrase();
-    this.setState({passphrase, keys,});
+
+    this.setState({dice, passphrase, keys,});
   }
 
-  getRandomIntInclusive = (min, max) => {
+  randomCrypto = () => {
     const cryptoObj = window.crypto || window.msCrypto; // for IE 11
-
     const randomBuffer = new Uint32Array(1);
     cryptoObj.getRandomValues(randomBuffer);
     const randomNumber = randomBuffer[0] / (0xffffffff + 1);
 
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(randomNumber * (max - min + 1)) + min;
+    return randomNumber;
   }
 
-  dice = () => {
+  getRandomIntInclusive = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+
+    return Math.floor(this.randomCrypto() * (max - min + 1)) + min;
+  }
+
+  rollDice = () => {
     return this.getRandomIntInclusive(1, 6);
   }
 
@@ -34,7 +41,7 @@ export default class App extends Component {
     for (let i = 0; i < length; ++i) {
       let key = '';
       for (let j = 0; j < 5; ++j) {
-        key += this.dice().toString();
+        key += this.rollDice().toString();
       }
       pw[key] = eff[key];
     }
@@ -44,16 +51,20 @@ export default class App extends Component {
 
   render = () => {
     return (
-      <div style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-between',}}>
+      <div className='centered monospace white' style={{display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'space-between',}}>
         <div />
-        <a href='https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases' style={{textDecoration: 'none',}}>
+        <div>
           <h1>{this.state.passphrase}</h1>
-          <h4>{this.state.keys}</h4>
-        </a>
+          <a className='white' href='https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases' style={{textDecoration: 'none',}}>
+            {this.state.keys}
+          </a>
+          <br />
+          <a className='lg-size' onClick={this.componentWillMount}>{this.state.dice}</a>
+        </div>
         <div />
         <div>
           <hr />
-          <p>Made with ❤ by <a href='https://github.com/Johj'>Peter</a></p>
+          <p>Made with ❤ by <a className='white' href='https://github.com/Johj'>Peter</a></p>
         </div>
       </div>
     );
