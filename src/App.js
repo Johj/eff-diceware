@@ -59,7 +59,7 @@ export default class App extends Component {
             {this.state.keys}
           </a>
           <br /><br /><br />
-          <a className='lg-size' onClick={this.componentWillMount}>{this.state.dice}</a>
+          <a className='lg-size unselectable' onClick={this.componentWillMount}>{this.state.dice}</a>
         </div>
         <div />
         <div>
