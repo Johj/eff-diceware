@@ -10,7 +10,7 @@ export default class App extends Component {
   }
 
   componentWillMount = () => {
-    const dice = String.fromCharCode(parseInt(2679 + this.rollDice(), 16)); // unicode dice
+    const dice = this.rollDice();
     const [passphrase, keys] = this.generatePassphrase();
 
     this.setState({dice, passphrase, keys,});
@@ -33,7 +33,7 @@ export default class App extends Component {
   }
 
   rollDice = () => {
-    return this.getRandomIntInclusive(1, 6);
+    return String.fromCharCode(parseInt(2680 + this.getRandomIntInclusive(0, 5), 16));
   }
 
   generatePassphrase = (length = 6) => {
@@ -41,7 +41,7 @@ export default class App extends Component {
     for (let i = 0; i < length; ++i) {
       let key = '';
       for (let j = 0; j < 5; ++j) {
-        key += this.rollDice().toString();
+        key += this.getRandomIntInclusive(1, 6).toString();
       }
       pw[key] = eff[key];
     }
